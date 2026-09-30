@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Configuração local e credenciais
+.env
+.env.*
+!.env.example
+.aws/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
