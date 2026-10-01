@@ -1,0 +1,29 @@
+{
+    "metadata_arquivo": {
+        "data_geracao": "2024-03-15",
+        "origem_lote": "sistema_X"
+    },
+    "lista_pedidos": [
+        {
+            "id_pedido_arquivo": "S3P001-wallacesantana",
+            "id_cliente_arquivo": "S3C001",
+            "itens_pedido_arquivo": [
+                {"sku": "PROD-A", "qtd": 2},
+                {"sku": "PROD-B", "qtd": 1}
+            ]
+        },
+        {
+            "id_pedido_arquivo": "S3P002-wallacesantana",
+            "id_cliente_arquivo": "S3C002",
+            "itens_pedido_arquivo": [
+                {"sku": "PROD-C", "qtd": 5}
+            ]
+        },
+        {
+            "id_pedido_arquivo_invalido": "S3P003-falta-cliente",
+            "itens_pedido_arquivo": [
+                {"sku": "PROD-D", "qtd": 1}
+            ]
+        }
+    ]
+}

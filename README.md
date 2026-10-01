@@ -9,7 +9,7 @@
 
 Repositório de estudos da **Semana do Desenvolvedor AWS**, uma semana de prática da **Escola da Nuvem**, no contexto do curso AWS Developer Associate. O objetivo é desenvolver um sistema serverless de pedidos e registrar código, arquitetura, evidências e aprendizados de cada etapa.
 
-[Arquitetura](#arquitetura) · [Progresso](#progresso-da-semana) · [Como reproduzir](#como-reproduzir-o-dia-1) · [Métricas](#métricas-e-acompanhamento) · [Diário do Dia 1](day_1/README.md)
+[Arquitetura](#arquitetura) · [Progresso](#progresso-da-semana) · [Como reproduzir](#como-reproduzir-o-dia-1) · [Métricas](#métricas-e-acompanhamento) · [Dia 1](day_1/README.md) · [Dia 2](day_2/README.md)
 
 ## O que este projeto exercita
 
@@ -50,7 +50,7 @@ O diagrama acima é a **arquitetura de referência do curso**. S3, SNS, DynamoDB
 | Etapa | Escopo | Situação no repositório |
 | --- | --- | --- |
 | Dia 1 | API → Lambda → SQS FIFO → Lambda → EventBridge | Código, roteiro e capturas disponíveis |
-| Dia 2 | Ingestão de arquivos via S3, anunciada no roteiro | Aguardando registro da aula |
+| Dia 2 | S3 → SQS Standard → Lambda → DynamoDB/SNS/FIFO | Código, dados de teste e evidências disponíveis |
 | Próximas etapas | Evolução para a arquitetura completa | A registrar conforme o curso |
 
 O progresso descreve os artefatos disponíveis; não representa uma verificação da conta AWS nem uma porcentagem de conclusão do curso.
@@ -69,6 +69,11 @@ O progresso descreve os artefatos disponíveis; não representa uma verificaçã
 │   │   ├── pre-validacao-lambda.py
 │   │   └── validacao-lambda.py
 │   └── screenshots/            # Cinco capturas do console AWS
+├── day_2/
+│   ├── README.md               # Diário, testes e evidências da aula
+│   ├── full-context.md         # Roteiro resumido
+│   ├── lambda/                 # Validação de arquivos S3
+│   └── screenshots/test/       # Evidências dos testes do Dia 2
 └── docs/
     ├── acompanhamento.md       # Critérios de progresso e medições
     └── arch-diagram.png        # Arquitetura completa de referência
@@ -137,10 +142,11 @@ Confira os logs das duas funções e a resposta de `PutEvents` para acompanhar o
 
 | Indicador | Valor | Evidência |
 | --- | --- | --- |
-| Aulas com material registrado | 1 | `day_1/` |
-| Funções Lambda em Python | 2 | `day_1/lambda/` |
+| Aulas com material registrado | 2 | `day_1/`, `day_2/` |
+| Funções Lambda em Python | 3 | `day_1/lambda/`, `day_2/lambda/` |
 | Rotas HTTP documentadas | 1 — `POST /pedidos` | Inventário do Dia 1 |
 | Capturas do console | 5 | `day_1/screenshots/` |
+| Evidências de testes do Dia 2 | 3 | `day_2/screenshots/test/` |
 | Diagramas de referência em imagem | 1 | `docs/arch-diagram.png` |
 | Testes automatizados | Não disponíveis | Sem suíte de testes no repositório |
 | Latência, taxa de erro e custo | Não medidos | Sem exportações de telemetria |
