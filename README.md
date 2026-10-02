@@ -4,7 +4,7 @@
 
 ![AWS](https://img.shields.io/badge/AWS-Serverless-232F3E?logo=amazonwebservices&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![Etapa](https://img.shields.io/badge/Etapa-Dia%201%20documentado-00875A)
+![Etapa](https://img.shields.io/badge/Etapas-Dias%201%20e%202%20documentados-00875A)
 ![Curso](https://img.shields.io/badge/Escola%20da%20Nuvem-AWS%20Developer%20Associate-FF9900)
 
 Repositório de estudos da **Semana do Desenvolvedor AWS**, uma semana de prática da **Escola da Nuvem**, no contexto do curso AWS Developer Associate. O objetivo é desenvolver um sistema serverless de pedidos e registrar código, arquitetura, evidências e aprendizados de cada etapa.
@@ -43,7 +43,22 @@ flowchart LR
 
 ![Arquitetura de referência: ingestão por API e S3, filas SQS, funções Lambda, EventBridge, SNS e DynamoDB](docs/arch-diagram.png)
 
-O diagrama acima é a **arquitetura de referência do curso**. S3, SNS, DynamoDB e os consumidores posteriores ao EventBridge ainda não possuem implementação registrada neste repositório.
+O diagrama acima é a **arquitetura de referência do curso**. Os recursos dos Dias 1 e 2 já possuem material registrado; consumidores posteriores ao EventBridge continuam planejados.
+
+### Escopo do Dia 2
+
+```mermaid
+flowchart LR
+    json[Arquivo JSON] --> s3[S3 Data Lake]
+    s3 --> standard[SQS Standard]
+    standard --> validator[Lambda de validação S3]
+    validator -->|Pedidos válidos| fifo[SQS FIFO de pedidos · Dia 1]
+    validator --> history[DynamoDB · histórico]
+    validator -->|Schema ou processamento inválido| topic[SNS · alertas]
+    standard -.-> dlq[DLQ Standard]
+```
+
+O Dia 2 adiciona ingestão por arquivo, valida `lista_pedidos`, transforma pedidos válidos para o formato do Dia 1, registra o status no DynamoDB e alerta falhas pelo SNS.
 
 ## Progresso da semana
 
@@ -81,7 +96,22 @@ O progresso descreve os artefatos disponíveis; não representa uma verificaçã
 
 Cada nova aula pode seguir o padrão `day_N/`, com um `README.md`, código e evidências. Crie a pasta quando houver material da aula para registrar.
 
-## Como reproduzir o Dia 1
+## O que foi feito no Dia 2
+
+- Criado o canal de ingestão de arquivos JSON pelo S3.
+- Configurada a fila SQS Standard para notificações de novos objetos, com DLQ.
+- Implementada a Lambda [validacao-s3-arquivos](day_2/lambda/validacao-s3-arquivos-lambda.py).
+- Adicionado o histórico de processamento no DynamoDB e o alerta de erros pelo SNS.
+- Integrado o resultado válido à fila FIFO de pedidos do Dia 1.
+- Registrados cenários de sucesso, schema inválido e alerta SNS em [screenshots/test](day_2/screenshots/test/).
+
+O [README do Dia 2](day_2/README.md) contém o contrato do arquivo, variáveis de ambiente, configuração e checklist de validação.
+
+## Como reproduzir
+
+O provisionamento é manual pelo console AWS; não há infraestrutura como código ou deploy automatizado neste repositório.
+
+### Dia 1 — API e eventos
 
 ### Pré-requisitos
 
@@ -89,7 +119,7 @@ Cada nova aula pode seguir o padrão `day_N/`, com um `README.md`, código e evi
 - Uma região única para os recursos; o inventário original registra `us-west-1`.
 - Runtime Python 3.12 conforme o roteiro e `curl` para a chamada HTTP.
 
-O provisionamento é manual pelo console. O [roteiro da aula](day_1/full-context.md) contém as etapas da aula; não há infraestrutura como código ou deploy automatizado neste repositório.
+O [roteiro do Dia 1](day_1/full-context.md) contém as etapas e o [inventário](day_1/created_services.md) registra os recursos do laboratório.
 
 ### Configuração resumida
 
@@ -136,6 +166,12 @@ Resposta esperada da pré-validação após enfileiramento bem-sucedido:
 
 Confira os logs das duas funções e a resposta de `PutEvents` para acompanhar o restante do fluxo. A confirmação de publicação deve considerar `FailedEntryCount` e o resultado de cada entrada; o código atual apenas imprime a resposta. Referência: [API PutEvents](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutEvents.html).
 
+### Dia 2 — Arquivos S3
+
+Siga o [roteiro resumido do Dia 2](day_2/full-context.md). Envie `arquivo_com_pedidos.json` ao bucket para o caminho válido e `arquivo_schema_invalido.json` para o caminho de erro.
+
+Após cada envio, acompanhe a Lambda, a fila FIFO do Dia 1, o item criado no DynamoDB e a mensagem do SNS. As capturas estão em [day_2/screenshots](day_2/screenshots/) e [day_2/screenshots/test](day_2/screenshots/test/).
+
 ## Métricas e acompanhamento
 
 **Inventário documental em 30/09/2026**, contado a partir dos arquivos locais:
@@ -145,7 +181,7 @@ Confira os logs das duas funções e a resposta de `PutEvents` para acompanhar o
 | Aulas com material registrado | 2 | `day_1/`, `day_2/` |
 | Funções Lambda em Python | 3 | `day_1/lambda/`, `day_2/lambda/` |
 | Rotas HTTP documentadas | 1 — `POST /pedidos` | Inventário do Dia 1 |
-| Capturas do console | 5 | `day_1/screenshots/` |
+| Capturas do console | 10 | `day_1/screenshots/` e `day_2/screenshots/` |
 | Evidências de testes do Dia 2 | 3 | `day_2/screenshots/test/` |
 | Diagramas de referência em imagem | 1 | `docs/arch-diagram.png` |
 | Testes automatizados | Não disponíveis | Sem suíte de testes no repositório |
