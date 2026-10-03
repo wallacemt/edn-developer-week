@@ -9,7 +9,7 @@
 
 Repositório de estudos da **Semana do Desenvolvedor AWS**, uma semana de prática da **Escola da Nuvem**, no contexto do curso AWS Developer Associate. O objetivo é desenvolver um sistema serverless de pedidos e registrar código, arquitetura, evidências e aprendizados de cada etapa.
 
-[Arquitetura](#arquitetura) · [Progresso](#progresso-da-semana) · [Como reproduzir](#como-reproduzir) · [Métricas](#métricas-e-acompanhamento) · [Dia 1](day_1/README.md) · [Dia 2](day_2/README.md) · [Dia 3](day_3/README.md) · [Dia 4](day_4/README.md)
+[Arquitetura](#arquitetura) · [Progresso](#progresso-da-semana) · [Como reproduzir](#como-reproduzir) · [Métricas](#métricas-e-acompanhamento) · [Dia 1](day_1/README.md) · [Dia 2](day_2/README.md) · [Dia 3](day_3/README.md) · [Dia 4](day_4/README.md) · [Camada extra: front-end](extra/README.md)
 
 ## O que este projeto exercita
 
@@ -70,6 +70,7 @@ O Dia 2 adiciona ingestão por arquivo, valida `lista_pedidos`, transforma pedid
 | Dia 2 | S3 → SQS Standard → Lambda → DynamoDB/SNS/FIFO | Código, dados de teste e evidências disponíveis |
 | Dia 3 | EventBridge → SQS Standard → Lambda → DynamoDB | Código, inventário e evidência de sucesso disponíveis |
 | Dia 4 | EventBridge → filas de alteração/cancelamento → Lambda → DynamoDB | Código, inventário e 2 evidências de logs disponíveis |
+| Camada extra | Front-end Next.js (BFF) sobre o backend dos Dias 1 a 4 | Implantado (Elastic Beanstalk Single Instance) — ver [`extra/README.md`](extra/README.md) |
 | Próximas etapas | Evolução para a arquitetura completa | A registrar conforme o curso |
 
 O progresso descreve os artefatos disponíveis; não representa uma verificação da conta AWS nem uma porcentagem de conclusão do curso.
@@ -103,12 +104,27 @@ O progresso descreve os artefatos disponíveis; não representa uma verificaçã
 │   ├── full-context.md         # Roteiro resumido
 │   ├── lambda/                 # Alteração e cancelamento
 │   └── screenshots/test/       # Evidências dos dois fluxos
-└── docs/
-    ├── acompanhamento.md       # Critérios de progresso e medições
-    └── arch-diagram.png        # Arquitetura completa de referência
+├── docs/
+│   ├── acompanhamento.md       # Critérios de progresso e medições
+│   └── arch-diagram.png        # Arquitetura completa de referência
+└── extra/                      # Camada extra: front-end Next.js (BFF), fora do roteiro oficial
+    ├── README.md               # Diário, arquitetura, testes e pontos a evoluir
+    ├── docs/                   # Arquitetura alvo x implementada, ADR, contratos, inventário
+    ├── frontend/                # App Next.js, implantado
+    ├── infra/                   # Terraform (Elastic Beanstalk Single Instance)
+    └── screenshots/             # Capturas do app em produção
 ```
 
 Cada nova aula pode seguir o padrão `day_N/`, com um `README.md`, código e evidências. Crie a pasta quando houver material da aula para registrar.
+
+## O que foi feito na Camada extra
+
+- Desenhada e documentada a arquitetura-alvo (Next.js em containers no ECS Fargate) e a decisão de implementação real (Elastic Beanstalk Single Instance), motivada por um SCP de Organization que bloqueia ECS/ECR/ELB nesta conta de laboratório.
+- Implementado um front-end Next.js (BFF): cria pedidos pela API Gateway existente, lê status direto no DynamoDB e aciona alteração/cancelamento via EventBridge `PutEvents` — sem criar nenhuma Lambda ou rota de API nova.
+- Aplicada a infraestrutura via Terraform (IAM role mínima, Security Group, Elastic Beanstalk) e feito o deploy do código, incluindo a recuperação de uma instância que travou durante o build.
+- Redesenhado o front-end (Tailwind, imagens dinâmicas) para servir de material de portfólio, com evidência em [extra/screenshots](extra/screenshots/).
+
+O [README da Camada extra](extra/README.md) documenta a arquitetura, o contrato de eventos, o inventário com ARNs reais e os pontos a evoluir.
 
 ## O que foi feito no Dia 3
 
@@ -207,7 +223,7 @@ Após cada envio, acompanhe a Lambda, a fila FIFO do Dia 1, o item criado no Dyn
 
 ## Métricas e acompanhamento
 
-**Inventário documental em 30/09/2026**, contado a partir dos arquivos locais:
+**Inventário documental em 03/10/2026**, contado a partir dos arquivos locais:
 
 | Indicador | Valor | Evidência |
 | --- | --- | --- |
@@ -218,13 +234,20 @@ Após cada envio, acompanhe a Lambda, a fila FIFO do Dia 1, o item criado no Dyn
 | Evidências de testes do Dia 2 | 3 | `day_2/screenshots/test/` |
 | Evidências de testes do Dia 3 | 1 | `day_3/screenshots/test/` |
 | Evidências de testes do Dia 4 | 2 | `day_4/screenshots/test/` |
+| Evidências da Camada extra | 3 | `extra/screenshots/` |
 | Diagramas de referência em imagem | 1 | `docs/arch-diagram.png` |
 | Testes automatizados | Não disponíveis | Sem suíte de testes no repositório |
 | Latência, taxa de erro e custo | Não medidos | Sem exportações de telemetria |
 
 O [painel de acompanhamento](docs/acompanhamento.md) define como registrar resultados e comparar as próximas etapas. Os badges do topo são descritivos; não indicam build, disponibilidade ou deploy verificado.
 
+## Convenção de tags AWS
+
+Os recursos criados para este projeto devem usar a tag `createdBy: "Wallace Santana"`. Aplique-a durante a criação, sempre que o serviço permitir, ou imediatamente depois pelo console AWS. O [guia de acompanhamento](docs/acompanhamento.md#padrão-de-tags-dos-recursos-aws) contém a regra completa para manter os inventários e filtros consistentes.
+
 ## Evidências do laboratório
+
+![Dashboard da camada extra, com pedidos reais lidos do DynamoDB](extra/screenshots/app_dashboard.png)
 
 ![Captura do console do API Gateway no Dia 1](day_1/screenshots/api-gtw-day-one.png)
 

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "extra/frontend/app/globals.css"
+        ],
+        "createdAt": "2026-10-03T16:15:37.428Z",
+        "reason": "intentional: replicating referenced finex-finance-saas dark SaaS design system's gradient wordmark/hero style, confirmed by user request to apply that design system"
+      }
+    ]
+  }
+}
