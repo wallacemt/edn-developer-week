@@ -24,6 +24,8 @@ EventBridge Rule → SQS Standard → Lambda → DynamoDB
 
 Use `seu-nome`, a mesma região dos dias anteriores e anote ARNs e URLs.
 
+Em cada recurso, adicione a tag `createdBy: "Wallace Santana"`. A regra está detalhada no [guia de acompanhamento](../docs/acompanhamento.md#padrão-de-tags-dos-recursos-aws).
+
 ## 1. Criar a fila e o banco
 
 1. Crie a DLQ Standard.

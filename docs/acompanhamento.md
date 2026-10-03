@@ -10,6 +10,20 @@
 4. Atualize a tabela de progresso e o inventário do README principal, incluindo a data da contagem.
 5. Só marque uma verificação como concluída quando houver resultado registrado.
 
+## Padrão de tags dos recursos AWS
+
+Todo recurso criado para este projeto deve receber a tag abaixo:
+
+| Chave | Valor |
+| --- | --- |
+| `createdBy` | `Wallace Santana` |
+
+Ao criar ou editar um recurso no console AWS, abra a seção **Tags** e adicione exatamente essa chave e esse valor. Se o serviço permitir tags no momento da criação, aplique a tag antes de concluir; caso contrário, adicione-a logo depois.
+
+Use o mesmo padrão para buckets S3, filas e DLQs SQS, funções e layers Lambda, tabelas DynamoDB, tópicos SNS, regras e event buses EventBridge, roles IAM e demais recursos do laboratório. O nome do recurso continua seguindo o identificador da aula; `createdBy` identifica a autoria da criação.
+
+Ao registrar um novo recurso em `created_services.md`, confirme também que a tag foi aplicada. Não use variações como `CreatedBy`, `created-by` ou valores abreviados, para manter filtros e relatórios consistentes.
+
 **Documentado** significa que há material no repositório. **Validado** significa que existe evidência de execução. **Planejado** identifica algo ainda não implementado ou registrado.
 
 ## Métricas operacionais

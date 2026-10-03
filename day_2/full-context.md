@@ -26,6 +26,8 @@ S3 → SQS Standard → Lambda → SQS FIFO de pedidos → fluxo do Dia 1
 
 Substitua `seu-nome`, use uma única região e anote ARNs e URLs.
 
+Adicione a tag `createdBy: "Wallace Santana"` em cada recurso criado. Consulte o [padrão de tags](../docs/acompanhamento.md#padrão-de-tags-dos-recursos-aws).
+
 ## 1. IAM e filas
 
 1. Crie a role para Lambda com `AWSLambdaBasicExecutionRole`.

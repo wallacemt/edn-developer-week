@@ -61,6 +61,8 @@ O arquivo [válido](arquivo_com_pedidos.json) contém dois pedidos completos e u
 
 ## Configuração resumida
 
+Adicione `createdBy: "Wallace Santana"` na seção **Tags** de cada recurso criado. Consulte o [padrão geral de tags](../docs/acompanhamento.md#padrão-de-tags-dos-recursos-aws).
+
 1. Crie a role `lambda-s3-validation-role-seu-nome` com logs e permissões para S3, SQS, DynamoDB, SNS e a FIFO do Dia 1.
 2. Crie o bucket `datalake-arquivos-seu-nome`.
 3. Crie a DLQ e a fila Standard `s3-arquivos-json-queue-seu-nome`, com visibility timeout `30` segundos e `maximum receives = 3`.

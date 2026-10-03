@@ -48,6 +48,8 @@ day_4/
 
 ## Configuração resumida
 
+Adicione `createdBy: "Wallace Santana"` em cada recurso criado. O [guia de acompanhamento](../docs/acompanhamento.md#padrão-de-tags-dos-recursos-aws) define o padrão.
+
 1. Crie a role `lambda-altera-cancela-role-seu-nome` com logs, leitura/remoção das duas filas e atualização da tabela `pedidos-db-seu-nome`.
 2. Crie as filas Standard `cancela-pedido-queue-seu-nome` e `altera-pedido-queue-seu-nome`, cada uma com sua DLQ, visibility timeout de `70` segundos e `maximum receives = 3`.
 3. Crie uma regra EventBridge para cancelamento e outra para alteração, direcionando cada evento à fila correspondente.

@@ -41,6 +41,8 @@ day_3/
 
 ## Configuração resumida
 
+Adicione `createdBy: "Wallace Santana"` em cada recurso criado. O [guia de acompanhamento](../docs/acompanhamento.md#padrão-de-tags-dos-recursos-aws) define o padrão.
+
 1. Crie a role `lambda-processa-pedidos-role-seu-nome` com logs, leitura/remoção da SQS pendente e escrita na tabela DynamoDB.
 2. Crie `pedidos-pendentes-dlq-seu-nome` e `pedidos-pendentes-queue-seu-nome` como filas Standard. Configure visibility timeout de `70` segundos, DLQ e `maximum receives = 3`.
 3. Crie `pedidos-db-seu-nome` no DynamoDB com partition key `pedidoId` (String).

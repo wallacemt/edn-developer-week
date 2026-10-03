@@ -19,6 +19,8 @@ Receber pedidos por uma API REST, desacoplar o processamento com SQS FIFO e publ
 
 ## Contrato registrado no código
 
+Os recursos do laboratório seguem a tag `createdBy: "Wallace Santana"`. Mantenha esse padrão ao criar recursos das próximas aulas.
+
 | Etapa                   | Comportamento atual                                                        |
 | ----------------------- | -------------------------------------------------------------------------- |
 | Entrada HTTP            | Corpo JSON com`pedidoId` e `clienteId` não vazios                     |

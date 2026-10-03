@@ -20,6 +20,7 @@ Ao final da prática, o sistema deverá receber pedidos por HTTP, enfileirá-los
 - Substitua `seu-nome` por um identificador único em todos os recursos.
 - Use a mesma região nos serviços regionais do laboratório.
 - Anote os ARNs, a URL da fila e a Invoke URL da API conforme forem criados.
+- Adicione a tag `createdBy: "Wallace Santana"` em cada recurso criado.
 
 A conta do laboratório tem permissões limitadas. Os nomes dos menus podem variar em relação ao material da aula.
 
