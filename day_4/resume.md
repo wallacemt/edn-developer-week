@@ -1,0 +1,2 @@
+
+>  **Vamos expandir a funcionalidade do nosso sistema para lidar com outras operações importantes no ciclo de vida de um pedido: cancelamento e alteração. Utilizaremos novamente o EventBridge para rotear esses novos tipos de eventos para filas SQS dedicadas, que acionarão Lambdas específicas para atualizar o estado do pedido na nossa tabela DynamoDB principal. Além disso, revisaremos a importância das Dead Letter Queues (DLQs) que configuramos ao longo do caminho e faremos um teste prático para ver uma DLQ em ação.**

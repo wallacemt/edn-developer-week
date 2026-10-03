@@ -23,6 +23,8 @@
 
 # Lambda
 
+- processa-pedidos-lambda-wallacesantana
+  - arn:aws:lambda:us-west-1:006952505713:function:processa-pedidos-lambda-wallacesantana
 ---
 
 # DynamoDB
@@ -31,3 +33,9 @@
   
   - pedidos-db-wallacesantana 
     - arn:aws:dynamodb:us-west-1:006952505713:table/pedidos-db-wallacesantana
+
+# EventBridge (Role)
+  > Role
+
+  - novo-pedido-validado-rule-wallacesantana
+    - arn:aws:events:us-west-1:006952505713:rule/pedidos-event-bus-wallacesantana/novo-pedido-validado-rule-wallacesantana
