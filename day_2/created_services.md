@@ -25,7 +25,7 @@
 
 # Lambda
 
-> Lambda de Pre-Validação de dados.
+> Lambda
 
 - validacao-s3-arquivos-lambda-wallacesantana
   - arn:aws:lambda:us-west-1:006952505713:function:validacao-s3-arquivos-lambda-wallacesantana

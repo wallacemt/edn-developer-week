@@ -1,0 +1,17 @@
+{
+  "metadata_arquivo": {
+    "data_geracao": "2026-10-02"
+  },
+  "lista_pedidos": [
+    {
+      "id_pedido_arquivo": "s3P00333-wallacesantana",
+      "id_cliente_arquivo": "clienteS3-wallace",
+      "itens_pedido_arquivo": [
+        {
+          "sku": "PROD-S3-001",
+          "qtd": 10
+        }
+      ]
+    }
+  ]
+}

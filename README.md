@@ -9,7 +9,7 @@
 
 Repositório de estudos da **Semana do Desenvolvedor AWS**, uma semana de prática da **Escola da Nuvem**, no contexto do curso AWS Developer Associate. O objetivo é desenvolver um sistema serverless de pedidos e registrar código, arquitetura, evidências e aprendizados de cada etapa.
 
-[Arquitetura](#arquitetura) · [Progresso](#progresso-da-semana) · [Como reproduzir](#como-reproduzir-o-dia-1) · [Métricas](#métricas-e-acompanhamento) · [Dia 1](day_1/README.md) · [Dia 2](day_2/README.md)
+[Arquitetura](#arquitetura) · [Progresso](#progresso-da-semana) · [Como reproduzir](#como-reproduzir) · [Métricas](#métricas-e-acompanhamento) · [Dia 1](day_1/README.md) · [Dia 2](day_2/README.md) · [Dia 3](day_3/README.md)
 
 ## O que este projeto exercita
 
@@ -18,6 +18,7 @@ Repositório de estudos da **Semana do Desenvolvedor AWS**, uma semana de práti
 - Publicação de eventos de negócio no Amazon EventBridge.
 - Permissões entre serviços com IAM e investigação de execução por logs.
 - Registro da evolução de uma aplicação orientada a eventos.
+- Persistência do estado final dos pedidos em DynamoDB.
 
 ## Arquitetura
 
@@ -66,6 +67,7 @@ O Dia 2 adiciona ingestão por arquivo, valida `lista_pedidos`, transforma pedid
 | --- | --- | --- |
 | Dia 1 | API → Lambda → SQS FIFO → Lambda → EventBridge | Código, roteiro e capturas disponíveis |
 | Dia 2 | S3 → SQS Standard → Lambda → DynamoDB/SNS/FIFO | Código, dados de teste e evidências disponíveis |
+| Dia 3 | EventBridge → SQS Standard → Lambda → DynamoDB | Código, inventário e evidência de sucesso disponíveis |
 | Próximas etapas | Evolução para a arquitetura completa | A registrar conforme o curso |
 
 O progresso descreve os artefatos disponíveis; não representa uma verificação da conta AWS nem uma porcentagem de conclusão do curso.
@@ -89,12 +91,27 @@ O progresso descreve os artefatos disponíveis; não representa uma verificaçã
 │   ├── full-context.md         # Roteiro resumido
 │   ├── lambda/                 # Validação de arquivos S3
 │   └── screenshots/test/       # Evidências dos testes do Dia 2
+├── day_3/
+│   ├── README.md               # Diário, fluxo e pontos a evoluir
+│   ├── full-context.md         # Roteiro resumido
+│   ├── lambda/                 # Processamento central
+│   └── screenshots/test/       # Evidência do processamento
 └── docs/
     ├── acompanhamento.md       # Critérios de progresso e medições
     └── arch-diagram.png        # Arquitetura completa de referência
 ```
 
 Cada nova aula pode seguir o padrão `day_N/`, com um `README.md`, código e evidências. Crie a pasta quando houver material da aula para registrar.
+
+## O que foi feito no Dia 3
+
+- Criada a regra EventBridge para capturar `NovoPedidoValidado`.
+- Adicionadas a fila SQS Standard de pedidos pendentes e sua DLQ.
+- Implementada a Lambda de processamento central.
+- Criada a tabela DynamoDB principal com chave `pedidoId`.
+- Registrado o fluxo completo até a persistência do pedido, com evidência em [screenshots/test](day_3/screenshots/test/).
+
+O [README do Dia 3](day_3/README.md) documenta a configuração, o contrato do evento, o teste e os pontos de evolução.
 
 ## O que foi feito no Dia 2
 
@@ -178,11 +195,12 @@ Após cada envio, acompanhe a Lambda, a fila FIFO do Dia 1, o item criado no Dyn
 
 | Indicador | Valor | Evidência |
 | --- | --- | --- |
-| Aulas com material registrado | 2 | `day_1/`, `day_2/` |
-| Funções Lambda em Python | 3 | `day_1/lambda/`, `day_2/lambda/` |
+| Aulas com material registrado | 3 | `day_1/`, `day_2/`, `day_3/` |
+| Funções Lambda em Python | 4 | `day_1/lambda/`, `day_2/lambda/`, `day_3/lambda/` |
 | Rotas HTTP documentadas | 1 — `POST /pedidos` | Inventário do Dia 1 |
-| Capturas do console | 10 | `day_1/screenshots/` e `day_2/screenshots/` |
+| Capturas do console | 15 | `day_1/screenshots/`, `day_2/screenshots/` e `day_3/screenshots/` |
 | Evidências de testes do Dia 2 | 3 | `day_2/screenshots/test/` |
+| Evidências de testes do Dia 3 | 1 | `day_3/screenshots/test/` |
 | Diagramas de referência em imagem | 1 | `docs/arch-diagram.png` |
 | Testes automatizados | Não disponíveis | Sem suíte de testes no repositório |
 | Latência, taxa de erro e custo | Não medidos | Sem exportações de telemetria |
